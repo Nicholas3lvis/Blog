@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock  %}
+    
+{% block body %}  
+<header class="py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">Welcome to Blog Home!</h1>
+            <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
+        </div>
+    </div>
+</header>
+
+<!-- Page content-->
+<div class="container">
+    <div class="row">
+        <!-- Blog entries-->
+        <div class="col-lg-8">
+
+            {% if msg %}
+            <div class="alert alert-warning">{{ msg }}</div>
+            {% endif %}
+
+            {% if featured %}
+            <div class="card mb-4"> 
+                <a href="#!"><img class="card-img-top" src="{{ featured.img.url }}" alt="Featured image" /></a>
+                <div class="card-body">
+                    <div class="small text-muted">{{ featured.created }}</div>
+                    <h2 class="card-title">{{ featured.title }}</h2>
+                    <p class="card-text">{{ featured.body|truncatechars:250 }}</p>
+                    <a class="btn btn-primary" href="{% url 'singlepage' featured.slug %}">Read more →</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <p>No featured post available at the moment.</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Search widget -->
+            <div class="card mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+                    <form action="{% url 'home' %}">
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="search" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                            <button class="btn btn-primary" id="button-search">Go!</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Categories widget -->
+            <div class="card mb-4">
+                <div class="card-header">Categories</div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li><a href="#">Web Design</a></li>
+                        <li><a href="#">JavaScript</a></li>
+                        <li><a href="#">CSS</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Non-featured blog posts -->
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-lg-3">
+            <div class="card mb-4">
+                <a href="#!"><img class="card-img-top" src="{{ post.img.url }}" alt="Post image" height="200" /></a>
+                <div class="card-body">
+                    <div class="small text-muted">{{ post.category }}</div>
+                    <div class="small text-muted">{{ post.created }}</div>
+                    <h6 class="card-title text-muted">By {{ post.author }}</h6>
+                    <h2 class="card-title h4">{{ post.title|truncatechars:20 }}</h2>
+                    <p class="card-text">{{ post.body|truncatechars:150 }}</p>
+                    <a class="btn btn-primary" href="{% url 'singlepage' post.slug %}">Read more →</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No blog posts available.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Pagination">
+        <ul class="pagination justify-content-center my-4">
+            {% if posts.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}">&laquo;</a></li>
+            {% endif %}
+            
+            {% for page in pages.page_range %}
+            <li class="page-item {% if page == posts.number %}active{% endif %}">
+                <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+            </li>
+            {% endfor %}
+            
+            {% if posts.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}

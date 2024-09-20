@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+    <h1 class="text-center m-3">View Developers Profiles</h1>
+    <div class="container">
+        <div class="row mb-3">
+            {% for user in users %}
+            <div class="col-3" style="margin-left: 2%;">
+                <a href="{% url 'user_profile' user.id %}" style="text-decoration: none;" title="View Profile">
+                    <div class="card" style="width: 18rem;">
+                        {% if user.profile_pic %}
+                        <img src="{{ user.profile_pic.url }}" alt="user picture" >
+                        {% else %}
+                        <img src="{% static 'images/img1.png' %}" alt="">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ user.username }}</h5>
+                            <p class="card-text text-center">{{ user.core_skill }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p>No users available.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

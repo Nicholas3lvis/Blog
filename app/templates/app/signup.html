@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<div class="container mt-4 offset-3" >
+   
+    <form action="" method="post" class="col-6 formdis">
+        <h2 class="mb-3">Create an account</h2>
+        {% csrf_token %}
+
+        {% comment %} {{ form.as_p}} {% endcomment %}
+        
+        {% for field in form %}
+            
+            {% if field.errors %}
+
+                <div class="mb-3">
+                    {{ field }}
+                    <small>{{ field.errors }}</small>
+                </div>
+            {% else %}
+            <div class="mb-3">
+                {{ field }}
+            </div>
+            {% endif %}
+                            
+        {% endfor %}
+            <button class="btn btn-primary mb-3">Sign Up </button>
+            <p>Already Have an Account <a href="{% url 'signin' %}">Login</a></p>
+    </form>
+</div>
+
+    
+{% endblock body %}
+    

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Already subscribed{% endblock title %}
+
+
+{% block body %}
+<div class="container alert alert-danger mt-5 mb-5" id="sub">
+    <h1 class="text-center">The subscription failed</h1>
+    <p class="text-center">Sorry, there was an issue with your subscription. Please try again later.</p>
+    <center><a href="{% url 'home' %}"><input type="submit" value="Go Back Home" class="btn btn-primary"></a></center>
+</div>
+
+{% endblock body %}

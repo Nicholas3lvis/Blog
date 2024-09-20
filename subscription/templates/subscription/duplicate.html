@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Already subscribed{% endblock title %}
+
+
+{% block body %}
+    
+
+<div class="container alert alert-warning mt-5 mb-5" id="sub">
+
+    <h1 class="text-center">This email has already been subscribed</h1>
+    <p class="text-center">The email address you entered is already in our subscription list.</p>
+    <center><a href="{% url 'home' %}"><input type="submit" value="Go Back Home" class="btn btn-primary"></a></center>
+</div>
+
+{% endblock body %}

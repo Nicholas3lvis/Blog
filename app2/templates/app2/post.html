@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Post Page{% endblock  %}
+    
+{% block body %}  
+<div class="container mt-4 offset-3" >
+    <form action="" method="post" enctype="multipart/form-data"class="col-6 formdis">
+        {% csrf_token %}
+        
+        {% if update %}
+            <h4>Update Your Post</h4>
+         {% else %}
+            <h4>Create Your Post</h4>
+        {% endif %}
+
+        {% for field in form %}
+        <div class="mb-3">
+            <label for="">{{ field.label }}</label>
+            {{ field.media }}
+            {{ field}}
+        </div>
+        {% endfor %}
+            
+      {% if update %}
+            <button class="btn btn-primary" style="width: 100%;">update Post</button>
+        {% else %}
+        <button class="btn btn-primary" style="width: 100%;">Create Post</button>
+      {% endif %}
+        
+        
+    </form>
+</div>
+{% endblock body %}

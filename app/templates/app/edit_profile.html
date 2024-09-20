@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block body %}
+<style>
+    form{
+        box-shadow: rgba(0,0,0,0.35) 0 5px 15px ;
+        background-color: white;
+        width: 600px !important;
+        border-radius: 10px;
+        padding: 20px !important;
+        margin: 20px auto !important;
+    }
+   
+    form p{
+        text-align: center;
+    
+    }
+    form small{
+        color: red;
+    }
+</style>
+
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3 class="text-center text-primary">Edit Your Profile</h3>
+        <div class="row">
+        {% for field in form %}
+                
+                {% if field.errors %}
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ field }}
+                        </div>
+                    </div>
+                    <small>{{ field.errors }}</small>
+
+                {% else %}
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ field }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                    
+                   
+                     
+        {% endfor %}
+    </div> 
+     
+        <button class="btn btn-primary" style="width: 100%;">Edit Profile</button>
+    </form>
+{% endblock body %}
+    
