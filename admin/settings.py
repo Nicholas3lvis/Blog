@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-vm)&g0+_th8d61kx3ja&r05cpaxvac^-5fojnqls^5(3nexbql
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+import os
+ALLOWED_HOSTS = [os.getenv('RENDER_EXTERNAL_HOSTNAME'), 'localhost', '127.0.0.1']
+
 
 
 # Application definition
@@ -55,6 +57,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'blog-yafn.onrender.com',
 ]
 
 ROOT_URLCONF = 'admin.urls'
