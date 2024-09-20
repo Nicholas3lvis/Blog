@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 
 # Create your models here.
 class Category(models.Model):
@@ -15,7 +15,7 @@ class Blog(models.Model):
     author = models.CharField(max_length=100)
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField()
-    body = RichTextField(blank=True, null=True)
+    body = CKEditor5Field(blank=True,null=True)
     # body = models.TextField()
     img = models.ImageField(upload_to='img')
     created = models.DateTimeField(auto_now_add =True)

@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'app',
     'app2',
     'django_summernote',
-    'ckeditor',
+    'django_ckeditor_5',
     'requests',
     'subscription',
 ]
@@ -60,8 +60,9 @@ MIDDLEWARE = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'blog-yafn.onrender.com',
+    'https://blog-yafn.onrender.com',
 ]
+
 
 ROOT_URLCONF = 'admin.urls'
 
@@ -145,3 +146,50 @@ AUTH_USER_MODEL = 'app.CustomUser'
 MAILCHIMP_API_KEY = 'b629df587de8ff7562a08c875014e213-us14'
 MAILCHIMP_SERVER_PREFIX = 'us14'
 MAILCHIMP_AUDIENCE_ID = '39530507b8'
+
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': [
+            {
+                'name': 'basicstyles',
+                'items': [
+                    'Bold',
+                    'Italic',
+                    'Underline',
+                    'Strike',
+                ],
+            },
+            {
+                'name': 'paragraph',
+                'items': [
+                    'NumberedList',
+                    'BulletedList',
+                    'Blockquote',
+                ],
+            },
+            {
+                'name': 'insert',
+                'items': [
+                    'ImageUpload',
+                    'Link',
+                    'MediaEmbed',
+                ],
+            },
+            {
+                'name': 'document',
+                'items': [
+                    'Source',
+                    'Maximize',
+                ],
+            },
+        ],
+        'image': {
+            'toolbar': [
+                'imageTextAlternative',
+                'imageStyle:full',
+                'imageStyle:side',
+            ]
+        },
+    }
+}
