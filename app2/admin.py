@@ -8,9 +8,8 @@ class BlogAdmin(admin.ModelAdmin):
     
     
 class ComentAdmin(admin.ModelAdmin):
-    list_display=['user','email','body','created','comment_img']
-    # summernote_fields = ('body', )
-
+    list_display=['user','body','created']
+    # summernote_fields = ('body', ) 
     
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(Category)

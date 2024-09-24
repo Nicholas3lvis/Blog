@@ -44,7 +44,7 @@
         <!-- Sidebar -->
         <div class="col-lg-4">
             <!-- Search widget -->
-            <div class="card mb-4">
+            <!-- <div class="card mb-4">
                 <div class="card-header">Search</div>
                 <div class="card-body">
                     <form action="{% url 'home' %}">
@@ -54,18 +54,20 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> -->
             <!-- Categories widget -->
-            <div class="card mb-4">
-                <div class="card-header">Categories</div>
-                <div class="card-body">
-                    <ul class="list-unstyled">
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">JavaScript</a></li>
-                        <li><a href="#">CSS</a></li>
-                    </ul>
+            <!-- Template (e.g., home.html) -->
+                <div class="card mb-4" >
+                    <div class="card-header">Categories</div>
+                    <div class="card-body">
+                        {% for category in categories %}
+                        <ul class="list-unstyled" style="display: inline-flex; margin-left: 2%;">
+                            <li><a href="{% url 'category' category.id %}" style="text-decoration: none;">{{ category.title }}</a></li>
+                        </ul>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+
         </div>
     </div>
 
@@ -73,14 +75,14 @@
     <div class="row">
         {% for post in posts %}
         <div class="col-lg-3">
-            <div class="card mb-4">
-                <a href="#!"><img class="card-img-top" src="{{ post.img.url }}" alt="Post image" height="200" /></a>
+            <div class="card mb-4" style="height: 600px;">
+                <a href="#!"><img class="card-img-top" src="{{ post.img.url }}" alt="Post image" height="200"/></a>
                 <div class="card-body">
                     <div class="small text-muted">{{ post.category }}</div>
                     <div class="small text-muted">{{ post.created }}</div>
-                    <h6 class="card-title text-muted">By {{ post.author }}</h6>
+                    <h6 class="card-title text-muted">By {{ request.user.username }}</h6>
                     <h2 class="card-title h4">{{ post.title|truncatechars:20 }}</h2>
-                    <p class="card-text">{{ post.body|truncatechars:150 }}</p>
+                    <p class="card-text">{{ post.body|truncatechars:200 }}</p>
                     <a class="btn btn-primary" href="{% url 'singlepage' post.slug %}">Read more →</a>
                 </div>
             </div>

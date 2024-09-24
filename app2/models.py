@@ -31,8 +31,6 @@ class Comment(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, blank=True, null=True, related_name='comments')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, related_name='comments')
     body = models.TextField()
-    email = models.EmailField(max_length=150)
-    comment_img = models.ImageField(upload_to='img')
     created = models.DateTimeField(auto_now_add =True)
     
     def __str__(self):

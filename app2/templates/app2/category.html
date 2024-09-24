@@ -1,0 +1,30 @@
+<!-- category_posts.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Selected Category{% endblock title %}
+    
+{% block body %}
+<div class="container" style="margin-left: 13%;">
+<h2 class="text-center mt-2 mb-2">Posts in {{ category.title }}</h2>
+<div class="row">
+    {% for post in posts %}
+    <div class="col-lg-3" style="margin-left: 2% ;">
+        <div class="card mb-4">
+            <a href="#!"><img class="card-img-top" src="{{ post.img.url }}" alt="Post image" height="200" /></a>
+            <div class="card-body">
+                <div class="small text-muted">{{ post.category }}</div>
+                <div class="small text-muted">{{ post.created }}</div>
+                <h6 class="card-title text-muted">By {{ request.user.username }}</h6>
+                <h2 class="card-title h4">{{ post.title|truncatechars:20 }}</h2>
+                <p class="card-text">{{ post.body|truncatechars:150 }}</p>
+                <a class="btn btn-primary" href="{% url 'singlepage' post.slug %}">Read more →</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No blog posts available.</p>
+    {% endfor %}
+</div>
+</div>
+{% endblock body %}

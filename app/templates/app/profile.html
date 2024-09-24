@@ -76,7 +76,7 @@
                             {% if user.profile_pic %}
                                 <img src="{{ user.profile_pic.url }}" title alt class="offset-1 mb-3" style="width: 30%; border-radius: 50%; margin-left: 35%;padding-bottom: 30px;">
                           {% else %}
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" title alt class="offset-1 mb-3">
+                          <img src="{% static 'images/img1.png' %}" title alt class="offset-1 mb-3"style="width: 30%; border-radius: 50%; margin-left: 35%;padding-bottom: 30px;">
                             {% endif %}   
                                 <h4 class="text-center">{{user.first_name}} {{user.last_name}}</h4>
                                 <p class="text-center">{{user.core_skill}}</p>
@@ -119,7 +119,7 @@
                             
                             {% for blog in blogs %}
                                 
-                                <div class="col-3">
+                                <div class="col-3 mt-2">
                                     <div class="card">
                                         <img src="{{blog.img.url}}" class="card-img-top" alt="..." height="200px" width="300px">
                                         <div class="card-body">

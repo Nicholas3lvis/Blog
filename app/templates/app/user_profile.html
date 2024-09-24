@@ -60,7 +60,7 @@
                         {% if user.profile_pic %}
                             <img src="{{ user.profile_pic.url }}" title alt class="offset-1 mb-3" style="width: 30%; border-radius: 50%; margin-left: 35%;padding-bottom: 30px;">
                       {% else %}
-                            <img src="{% static 'images/img1.png' %}" title alt class="offset-1 mb-3">
+                            <img src="{% static 'images/img1.png' %}" title alt class="offset-1 mb-3"style="width: 30%; border-radius: 50%; margin-left: 35%;padding-bottom: 30px;">
                         {% endif %}   
                             <h4 class="text-center">{{user.first_name}} {{user.last_name}}</h4>
                             <p class="text-center">{{user.core_skill}}</p>

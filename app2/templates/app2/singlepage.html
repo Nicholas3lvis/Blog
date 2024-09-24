@@ -1,83 +1,76 @@
 {% extends 'base.html' %}
 
-{% block title %}Single Page{% endblock  %}
-    
-{% block body %}  
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-lg-8">
-                <!-- Post content-->
-                                  
-               
-                    
-                <article>
-                    <!-- Post header-->
-                    <header class="mb-4">
-                        <!-- Post title-->
-                        <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
-                        <!-- Post meta content-->
-                        <div class="text-muted fst-italic mb-2">Posted on {{ post.created }} by {{ post.author }}</div>
-                        <!-- Post categories-->
-                        <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ post.category}}</a>
-                        <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
-                    </header>
-                    <!-- Preview image figure-->
-                    <figure class="mb-4"><img class="img-fluid rounded" src="{{ post.img.url }}" alt="..." width="900"/></figure>
-                    <!-- Post content-->
-                    <section class="mb-5">
-                        <p class="fs-5 mb-4">{{ post.body|linebreaks }}</p>
-                        {% comment %} <p class="fs-5 mb-4">The universe is large and old, and the ingredients for life as we know it are everywhere, so there's no reason to think that Earth would be unique in that regard. Whether of not the life became intelligent is a different question, and we'll see if we find that.</p>
-                        <p class="fs-5 mb-4">If you get asteroids about a kilometer in size, those are large enough and carry enough energy into our system to disrupt transportation, communication, the food chains, and that can be a really bad day on Earth.</p>
-                        <h2 class="fw-bolder mb-4 mt-5">I have odd cosmic thoughts every day</h2>
-                        <p class="fs-5 mb-4">For me, the most fascinating interface is Twitter. I have odd cosmic thoughts every day and I realized I could hold them to myself or share them with people who might be interested.</p>
-                        <p class="fs-5 mb-4">Venus has a runaway greenhouse effect. I kind of want to know what happened there because we're twirling knobs here on Earth without knowing the consequences of it. Mars once had running water. It's bone dry today. Something bad happened there as well.</p> {% endcomment %}
-                    </section>
-                </article>
-              
-                <!-- Comments section-->
-                <section class="mb-5">
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            <!-- Comment form-->
-                            {% if request.user.is_authenticated %}
-                                <form class="mb-4" method="post">
-                                    {% csrf_token %}
-                                    {{ form.body }}
-                                <button class="btn btn-primary mt-2">Drop Your Comment</button>
-                                </form>
+{% block title %}Read more{% endblock %}
 
-                                {% else %}
-                                <p>You Can<a href="">Login </a>to drop your comment </p>
-                            {% endif %}
-                            
-                            <!-- Comment with nested comments-->
-                            <div class="d-flex mb-4">
-                                <!-- Parent comment-->
-                                {% for comment in comments %}
-                                <div class="flex-shrink-0">
-                                    <img class="rounded-circle" src="comment.img.url" alt="..." />
-                                </div>
-                                <div class="ms-3">
-                                    <div class="fw-bold">{{comment.user.username}}gdfgs</div>
-                                    <p>{{comment.body}}gsgsf</p>
-                                    
-                                    <!-- Child comment 1-->
-                                  
-                                    <!-- Child comment 2-->
-                                    
-                                </div>
-                                {% endfor %}
-                              
-                            </div>
-                            <!-- Single comment-->
-                           
-                        </div>
-                    </div>
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Main Post Content -->
+        <div class="col-lg-8">
+            <article>
+                <header class="mb-4">
+                    <!-- Post title-->
+                    <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+                    <!-- Post meta content-->
+                    <div class="text-muted fst-italic mb-2">Posted on {{ post.created }} by {{ request.user.username }}</div>
+                    <!-- Post categories-->
+                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ post.category }}</a>
+                </header>
+                <!-- Preview image figure-->
+                <figure class="mb-4">
+                    <center><img class="img-fluid rounded" src="{{ post.img.url }}" alt="..." width="900"/></center>
+                </figure>
+                <!-- Post content-->
+                <section class="mb-5">
+                    <p class="fs-5 mb-4">{{ post.body|linebreaks }}</p>
                 </section>
+            </article>
+
+            <!-- Comments section -->
+        <section class="mb-5">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <!-- Comment form -->
+                    {% if request.user.is_authenticated %}
+                    <form class="mb-4" method="post">
+                        {% csrf_token %}
+                        {{ form.body }}
+                        <button class="btn btn-primary mt-2">Drop Your Comment</button>
+                    </form>
+                    {% else %}
+                    <p>You can <a href="{% url 'login' %}">login</a> to drop your comment.</p>
+                    {% endif %}
+                
+                    <!-- Comments -->
+                </div>
+                {% for comment in comments %}
+                <div class="d-flex mb-4">
+                    <div class="ms-3">
+                        <div class="fw-bold">{{ comment.user.username }}</div>
+                        <p>{{ comment.body }}</p>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-            <!-- Side widgets-->
-            {% include 'widget.html' %}
+        </section>
+
         </div>
-    </div>
-{% endblock  %}
+
+        <!-- Related Posts Sidebar -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header">Related Posts</div>
+                <div class="card-body">
+                    {% for related in related_posts %}
+                        <div class="related-post">
+                            <h5><a href="{% url 'singlepage' related.slug %}">{{ related.title }}</a></h5>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
         
+
+    </div>
+</div>
+{% endblock %}

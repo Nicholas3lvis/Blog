@@ -21,5 +21,3 @@ class CommentPostForm(forms.ModelForm):
         fields = ['body']
         
     body = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'Share your Comment about the content'}))
-
-    

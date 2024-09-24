@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.template.defaultfilters import slugify
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.db.models import Q
 from django.contrib import messages
-from . models import Blog, Comment
+from . models import Blog, Comment,Category
 from . forms import BlogPostForm, CommentPostForm
 
 # Create your views here.
@@ -32,33 +32,44 @@ def home(request):
     
     # Safely get the featured post
     featured_post = Blog.objects.filter(featured=True).first()
+    categories = Category.objects.all()
 
     context = {
         'posts': posts,
         'featured': featured_post,
         'msg': msg,
         'pages': pages,
+        'categories':categories
     }
     
     return render(request, 'app2/home.html', context)
     
+
 def singlepage(request, slug):
-    post = Blog.objects.get(slug=slug)
-    comments = Comment.objects.filter(blog=post)
+    post = get_object_or_404(Blog, slug=slug)
+    comments = Comment.objects.filter(blog=post)  
+    # Related posts
+    related_posts = Blog.objects.filter(category=post.category).exclude(id=post.id)[:4]
+
     form = CommentPostForm()
-    if request.method =='POST':
+    if request.method == 'POST':
         if request.user.is_authenticated:
             form = CommentPostForm(request.POST)
             if form.is_valid():
                 comment = form.save(commit=False)
-                comment.post = post
+                comment.blog = post  
                 comment.user = request.user
                 comment.save()
-                messages.success(request, 'Comment submited successfuly')
+                messages.success(request, 'Comment submitted successfully')
                 return redirect('singlepage', slug=post.slug)
-        
-    context = {'post':post,'form':form,'comments':comments}
-    return render(request, 'app2/singlepage.html',context)
+
+    context = {
+        'post': post,
+        'form': form,
+        'comments': comments,
+        'related_posts': related_posts
+    }
+    return render(request, 'app2/singlepage.html', context)
 
 
 
@@ -106,3 +117,12 @@ def delete_post(request, slug):
    
     context = {'blog':blog, 'del':delete, 'blogs':blogs}
     return render(request, 'app/profile.html', context)
+
+def category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    posts = Blog.objects.filter(category=category)
+    context = {
+        'category': category,
+        'posts': posts
+    }
+    return render(request, 'app2/category.html', context)
