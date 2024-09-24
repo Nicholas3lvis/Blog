@@ -61,6 +61,7 @@ MIDDLEWARE = [
 
 CSRF_TRUSTED_ORIGINS = [
     'https://blog-yafn.onrender.com',
+    'https://blog-5t6w.onrender.com',
 ]
 
 
